@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import com.bugmaker.paintingboard.databinding.FragmentDrawBinding
 import com.bugmaker.paintingboard.dialog.CanvasCreateDialog
 import com.bugmaker.paintingboard.util.click
+import com.bugmaker.paintingboard.util.screenHeight
+import com.bugmaker.paintingboard.util.screenWidth
 import com.hi.dhl.binding.viewbind
 
 class DrawFragment : Fragment(R.layout.fragment_draw) {
@@ -25,9 +27,23 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
     }
 
     private fun initView() {
-        binding.createCanvas.click {
-            CanvasCreateDialog.getInstance().show(parentFragmentManager,"create")
 
+        binding.createCanvas.bringToFront()
+        binding.createCanvas.click {
+            //CanvasCreateDialog.getInstance().show(parentFragmentManager,"create")
+            //initLayoutSize()
+        }
+
+    }
+
+    /**
+     * TODO 初始化布局大小
+     */
+    fun initLayoutSize(){
+        binding.surfaceView.apply {
+            //initSize()
+            val layoutParam = ViewGroup.LayoutParams(screenWidth, screenHeight-150)
+            this.layoutParams = layoutParam
         }
 
     }
