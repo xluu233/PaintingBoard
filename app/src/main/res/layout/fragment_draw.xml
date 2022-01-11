@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DrawFragment">
+
+    <ImageButton
+        android:id="@+id/create_canvas"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/icon_add"
+        android:background="@null"
+        app:layout_constraintBottom_toTopOf="@+id/tools_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.bugmaker.paintingboard.view.CanvasLayout
+        android:id="@+id/surfaceView"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/tools_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_margin="20dp"
+        android:background="@drawable/tools_back"
+        android:elevation="3dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/iv_paint"
+            android:src="@drawable/icon_paint"
+            android:scaleType="fitCenter"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"/>
+
+        <ImageButton
+            android:id="@+id/iv_delete"
+            android:src="@drawable/icon_delete"
+            android:scaleType="fitCenter"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="36dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"/>
+
+        <ImageButton
+            android:id="@+id/iv_layer"
+            android:src="@drawable/icon_layer"
+            android:scaleType="fitCenter"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="30dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"/>
+
+        <ImageButton
+            android:id="@+id/iv_back_left"
+            android:src="@drawable/icon_back_left"
+            android:scaleType="fitCenter"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="35dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"/>
+
+        <ImageButton
+            android:id="@+id/iv_back_right"
+            android:rotationX="-180"
+            android:rotation="-180"
+            android:src="@drawable/icon_back_left"
+            android:scaleType="fitCenter"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="35dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"/>
+
+        <ImageButton
+            android:id="@+id/iv_save"
+            android:src="@drawable/icon_save"
+            android:scaleType="fitCenter"
+            android:layout_marginEnd="10dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="35dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"/>
+
+
+        <ImageButton
+            android:id="@+id/iv_more"
+            android:src="@drawable/icon_more"
+            android:scaleType="fitCenter"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="35dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
