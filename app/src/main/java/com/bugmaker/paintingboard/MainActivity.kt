@@ -2,7 +2,6 @@ package com.bugmaker.paintingboard
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.bugmaker.paintingboard.dialog.CanvasCreateDialog
 
 
 class MainActivity : AppCompatActivity() {
@@ -13,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         val fragment = DrawFragment.newInstance()
         supportFragmentManager.beginTransaction().add(R.id.fragment_container,fragment).show(fragment).commit()
 
-        CanvasCreateDialog.getInstance().show(supportFragmentManager,"create")
+//        CanvasCreateDialog.getInstance().show(supportFragmentManager,"create")
     }
 
 

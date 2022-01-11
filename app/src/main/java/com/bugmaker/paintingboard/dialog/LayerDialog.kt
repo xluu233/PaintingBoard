@@ -11,11 +11,11 @@ import com.bugmaker.paintingboard.util.dp
  * @Author AlexLu_1406496344@qq.com
  * @Date 2022/1/10 16:25
  */
-class CanvasCreateDialog : BaseBottomSheetDialogFragment<DialogCreateCanvasBinding>(DialogCreateCanvasBinding::inflate) {
+class LayerDialog : BaseBottomSheetDialogFragment<DialogCreateCanvasBinding>(DialogCreateCanvasBinding::inflate) {
 
     companion object{
         @JvmStatic
-        fun getInstance() = CanvasCreateDialog()
+        fun getInstance() = LayerDialog()
     }
 
     init {

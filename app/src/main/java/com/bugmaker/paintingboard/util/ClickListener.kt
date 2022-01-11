@@ -5,7 +5,7 @@ import com.bugmaker.paintingboard.R
 import kotlinx.coroutines.CoroutineScope
 
 
-const val CLICK_DELAY_TIME = 400L
+const val CLICK_DELAY_TIME = 200L
 
 /*------------------屏蔽View重复点击事件：方法一（推荐）------------------*/
 fun <T : View> T.click(delay: Long = CLICK_DELAY_TIME,scope: CoroutineScope ?= null, block: (T) -> Unit) {

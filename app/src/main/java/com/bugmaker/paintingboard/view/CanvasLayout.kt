@@ -9,7 +9,6 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.widget.FrameLayout
 import com.bugmaker.paintingboard.R
 import com.bugmaker.paintingboard.util.dp
 import com.bugmaker.paintingboard.util.screenHeight
@@ -42,6 +41,7 @@ class CanvasLayout: View {
         init()
     }
 
+    //注意这里是全局对象，因为设计只有一个view
     companion object{
 
         //画布设置
@@ -54,9 +54,20 @@ class CanvasLayout: View {
 
     }
 
-    private val pathsArray = LinkedList<Line>()
+    //全部画线
+    private val pathStack = Stack<Line>()
+    private val backPathArray = LinkedList<Line>()
+
+    //是否能够撤销
+    val canBack:Boolean
+        get() = !pathStack.empty()
+
+    //撤销恢复
+    val canReBack:Boolean
+        get() = !backPathArray.isEmpty()
+
     //当前画笔
-    private var curPaint = Paint().apply {
+    var curPaint = Paint().apply {
         color = paintColor
         strokeWidth = strokeWith
         strokeJoin = Paint.Join.ROUND
@@ -69,6 +80,8 @@ class CanvasLayout: View {
 
     //当前画笔操作
     private var curLine:Line ?= null
+
+    private var listener:DrawInterface ?= null
 
     private fun init() {
         initPaint()
@@ -111,10 +124,11 @@ class CanvasLayout: View {
             MotionEvent.ACTION_UP ->{
                 //保存当前路径
                 curLine = Line(curPath!!,curPaint)
-                pathsArray.add(curLine!!)
+                pathStack.push(curLine)
                 curPath = null
             }
         }
+        listener?.refreshBack()
         return true
     }
 
@@ -135,24 +149,39 @@ class CanvasLayout: View {
     override fun onDraw(canvas: Canvas?) {
         Log.d(TAG, "onDraw")
         super.onDraw(canvas)
-        if (pathsArray.isNotEmpty()){
-            pathsArray.forEach { line ->
-                canvas?.drawPath(line.path,line.paint)
-            }
-        }
-        curPath?.let { path->
-            canvas?.drawPath(path,curPaint)
+        if (curPath != null){
+            //正在画画
+            canvas?.drawPath(curPath!!,curPaint)
+        }else{
+            //画完了
         }
 
+        if (pathStack.isNotEmpty()){
+            pathStack.forEach { line ->
+                canvas?.drawPath(line.path,line.paint)
+                Log.d(TAG, "onDraw: $line")
+            }
+        }
     }
 
 
+    fun setListener(listener:DrawInterface){
+        this.listener = listener
+    }
+
     fun back(){
-        
+        curLine = pathStack.pop()
+        backPathArray.offer(curLine)
+        //刷新
+        invalidate()
+        listener?.refreshBack()
     }
 
     fun reBack(){
-
+        curLine = backPathArray.pollLast()
+        pathStack.push(curLine)
+        invalidate()
+        listener?.refreshBack()
     }
 
 }
