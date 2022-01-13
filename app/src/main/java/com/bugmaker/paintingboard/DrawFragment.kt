@@ -6,14 +6,14 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import com.bugmaker.paintingboard.bean.PaintSet
 import com.bugmaker.paintingboard.databinding.FragmentDrawBinding
 import com.bugmaker.paintingboard.dialog.DeleteDialog
 import com.bugmaker.paintingboard.dialog.LayerDialog
 import com.bugmaker.paintingboard.dialog.PaintDialog
 import com.bugmaker.paintingboard.dialog.SaveDialog
-import com.bugmaker.paintingboard.util.click
-import com.bugmaker.paintingboard.util.screenHeight
-import com.bugmaker.paintingboard.util.screenWidth
+import com.bugmaker.paintingboard.util.*
 import com.bugmaker.paintingboard.view.DrawInterface
 import com.hi.dhl.binding.viewbind
 
@@ -72,7 +72,7 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
 
         //选择画笔
         binding.ivPaint.click {
-            PaintDialog.getInstance().show(parentFragmentManager,"paint")
+            PaintDialog.instance.show(parentFragmentManager,"paint")
         }
 
         //橡皮
@@ -94,6 +94,9 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
 
 
     private fun initData() {
+        LiveDataBus.with<PaintSet>(Constant.SetPaintParams).observe(this, Observer {
+            binding.surfaceView.setPaint(it)
+        })
 
     }
 
@@ -111,14 +114,6 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
             val layoutParam = ViewGroup.LayoutParams(screenWidth, screenHeight-150)
             this.layoutParams = layoutParam
         }
-    }
-
-    /**
-     * TODO 设置当前画笔
-     * @param paint
-     */
-    fun setCurrentPaint(paint: Paint){
-        binding.surfaceView.curPaint = paint
     }
 
 

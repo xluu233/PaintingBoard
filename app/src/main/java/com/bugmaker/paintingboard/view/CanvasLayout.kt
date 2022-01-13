@@ -10,6 +10,8 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.bugmaker.paintingboard.R
+import com.bugmaker.paintingboard.bean.Line
+import com.bugmaker.paintingboard.bean.PaintSet
 import com.bugmaker.paintingboard.util.dp
 import com.bugmaker.paintingboard.util.screenHeight
 import com.bugmaker.paintingboard.util.screenWidth
@@ -79,7 +81,7 @@ class CanvasLayout: View {
     private var curPath: Path ?= null
 
     //当前画笔操作
-    private var curLine:Line ?= null
+    private var curLine: Line?= null
 
     private var listener:DrawInterface ?= null
 
@@ -105,6 +107,17 @@ class CanvasLayout: View {
 
     fun addBitmap(bitmap: Bitmap){
 
+    }
+
+    fun setPaint(paintSet: PaintSet){
+        curPaint = Paint().apply {
+            color = paintSet.color ?: curPaint.color
+            strokeWidth = paintSet.size.toFloat()
+            alpha = paintSet.alpha
+            style = Paint.Style.STROKE
+            strokeJoin = Paint.Join.ROUND
+            strokeCap = Paint.Cap.ROUND
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -146,21 +159,23 @@ class CanvasLayout: View {
 
     }
 
+    private var canvas:Canvas ?= null
     override fun onDraw(canvas: Canvas?) {
         Log.d(TAG, "onDraw")
+        this.canvas = canvas
         super.onDraw(canvas)
-        if (curPath != null){
-            //正在画画
-            canvas?.drawPath(curPath!!,curPaint)
-        }else{
-            //画完了
-        }
 
         if (pathStack.isNotEmpty()){
             pathStack.forEach { line ->
                 canvas?.drawPath(line.path,line.paint)
                 Log.d(TAG, "onDraw: $line")
             }
+        }
+        if (curPath != null){
+            //正在画画
+            canvas?.drawPath(curPath!!,curPaint)
+        }else{
+            //画完了
         }
     }
 

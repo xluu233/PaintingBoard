@@ -79,10 +79,6 @@ abstract class BaseDialogFragment<VB : ViewBinding>(
             setGravity(gravity)
             setBackgroundDrawableResource(background)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
         lifecycleScope.launch {
             initView()
             initData()

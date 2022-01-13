@@ -1,12 +1,17 @@
 package com.bugmaker.paintingboard.dialog
 
 import android.content.DialogInterface
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.SeekBar
+import com.bugmaker.paintingboard.bean.PaintSet
+import com.bugmaker.paintingboard.bean.PaintType
 import com.bugmaker.paintingboard.databinding.DialogCreateCanvasBinding
 import com.bugmaker.paintingboard.databinding.DialogPaintBinding
+import com.bugmaker.paintingboard.util.Constant
+import com.bugmaker.paintingboard.util.LiveDataBus
 import com.bugmaker.paintingboard.util.dp
 import com.bugmaker.paintingboard.util.screenHeight
 import kotlin.math.roundToInt
@@ -20,15 +25,20 @@ import kotlin.math.roundToInt
 class PaintDialog : BaseBottomSheetDialogFragment<DialogPaintBinding>(DialogPaintBinding::inflate) {
 
     companion object{
-        @JvmStatic
-        fun getInstance() = PaintDialog()
+
+        val instance:PaintDialog by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+            PaintDialog()
+        }
 
         //单位px
         var maxPaintSize:Int = 200
         var minPaintSize:Int = 1
 
         var size = minPaintSize
-        var alpha = 0.6f
+        var alpha:Int = 255
+
+        var curColor:Int ?= null
+        var curPaintType = PaintType.Normal
     }
 
     init {
@@ -67,7 +77,7 @@ class PaintDialog : BaseBottomSheetDialogFragment<DialogPaintBinding>(DialogPain
 
 
         binding.paintSeekbar2.apply {
-            max = 100
+            max = 255
             setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 //seekbar状态改变
                 override fun onProgressChanged(
@@ -87,8 +97,14 @@ class PaintDialog : BaseBottomSheetDialogFragment<DialogPaintBinding>(DialogPain
                     refreshPaintAlpha(seekBar!!.progress)
                 }
             })
-            progress = 60
+            progress = 255
         }
+
+        binding.colorPickView.setOnColorChangeListener {
+            curColor = it
+            //val color = ColorDrawable(curColor)
+        }
+
 
     }
 
@@ -103,17 +119,23 @@ class PaintDialog : BaseBottomSheetDialogFragment<DialogPaintBinding>(DialogPain
 
     private fun refreshPaintAlpha(progress: Int){
         Log.d(TAG, "refreshPaintAlpha: $progress")
-        alpha = progress.toFloat()/100f
-        var size = (alpha*100).toInt()
-        if (size > 100) size = 100
-        if (size < 0) size = 0
-        binding.paintAlphaText.text = "${size}%"
+        alpha = progress
+        if (alpha > 255) alpha = 255
+        if (alpha < 0) alpha = 0
+        var tempAlpha:Double  = alpha.toDouble()/255
+        if (tempAlpha > 1) tempAlpha = 1.0
+        if (tempAlpha < 0) tempAlpha = 0.0
+        binding.paintAlphaText.text = "${(tempAlpha*100).toInt()}%"
     }
+
+
     override suspend fun initData() {
 
     }
 
     override fun onDismiss(dialog: DialogInterface) {
+        val paintSet = PaintSet(size = size, alpha = alpha, color = curColor, paintType = curPaintType)
+        LiveDataBus.with<PaintSet>(Constant.SetPaintParams).postData(paintSet)
         super.onDismiss(dialog)
     }
 

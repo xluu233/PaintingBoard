@@ -124,16 +124,12 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding>(
             setLayout(width,height)
             setBackgroundDrawableResource(layoutBackground)
         }
-    }
-
-
-    override fun onResume() {
-        super.onResume()
         lifecycleScope.launch {
             initView()
             initData()
         }
     }
+
 
     abstract suspend fun initData()
 

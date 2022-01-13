@@ -34,6 +34,8 @@ public class ColorPickerView extends LinearLayout {
     private OnColorChangeListener onColorChangeListener;
     private RelativeLayout.LayoutParams vLocationLayoutParams;
 
+    public int currentColor = Color.rgb(red, green, blue);    //当前颜色
+
     public ColorPickerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         View view = LayoutInflater.from(context).inflate(R.layout.view_color_picker, this);
@@ -157,7 +159,6 @@ public class ColorPickerView extends LinearLayout {
 
     /**
      * 颜色值调整
-     *
      * @param progressColor
      */
     private void onProgressChanged(int progressColor) {
@@ -199,6 +200,7 @@ public class ColorPickerView extends LinearLayout {
         changeColor();
     }
 
+
     /**
      * 颜色明暗度调整
      */
@@ -239,6 +241,7 @@ public class ColorPickerView extends LinearLayout {
         tempGreen = (int) (tempGreen - tempGreen * vPercent);
         tempBlue = (int) (tempBlue - tempBlue * vPercent);
         int color = Color.argb(transValue, tempRed, tempGreen, tempBlue);
+        currentColor = color;
         cpvColorPreview.setColor(color);
         if (onColorChangeListener != null) {
             onColorChangeListener.colorChanged(color);
@@ -280,9 +283,9 @@ public class ColorPickerView extends LinearLayout {
         vTransPreview.setBackground(drawable);
     }
 
+
     /**
      * 设置该方法，颜色改变的时候会回调颜色值
-     *
      * @param onColorChangeListener
      */
     public void setOnColorChangeListener(OnColorChangeListener onColorChangeListener) {

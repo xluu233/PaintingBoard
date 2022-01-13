@@ -147,9 +147,8 @@
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
 
-    <include
-        android:id="@+id/layout_color_pick"
-        layout="@layout/include_colorpick"
+    <com.bugmaker.colorpick.ColorPickerView
+        android:id="@+id/color_pick_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
