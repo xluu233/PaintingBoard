@@ -9,15 +9,18 @@ import com.bugmaker.paintingboard.util.screenHeight
 
 /**
  * @ClassName CanvasCreateDialog
- * @Description TODO
+ * @Description TODO 保存导出
  * @Author AlexLu_1406496344@qq.com
  * @Date 2022/1/10 16:25
  */
 class SaveDialog : BaseBottomSheetDialogFragment<DialogSaveBinding>(DialogSaveBinding::inflate) {
 
     companion object{
-        @JvmStatic
-        fun getInstance() = SaveDialog()
+
+        val instance by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+            SaveDialog()
+        }
+
     }
 
     init {

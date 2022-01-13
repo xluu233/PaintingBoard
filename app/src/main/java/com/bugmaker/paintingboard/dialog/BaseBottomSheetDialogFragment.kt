@@ -37,7 +37,7 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding>(
     //是否能否点击外部取消
     var cancel = true
 
-    //默认状态：折叠
+    //默认状态
     var defaultState = BottomSheetBehavior.STATE_COLLAPSED
 
     //默认折叠高度
@@ -84,7 +84,7 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding>(
         //设置弹出高度
         behavior.peekHeight = peekHeight
         //设置展开状态
-        //behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        behavior.state = defaultState
 
         behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {

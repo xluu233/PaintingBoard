@@ -1,10 +1,7 @@
 package com.bugmaker.paintingboard.view
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
@@ -12,6 +9,7 @@ import android.view.View
 import com.bugmaker.paintingboard.R
 import com.bugmaker.paintingboard.bean.Line
 import com.bugmaker.paintingboard.bean.PaintSet
+import com.bugmaker.paintingboard.util.PaintTypeConstruct
 import com.bugmaker.paintingboard.util.dp
 import com.bugmaker.paintingboard.util.screenHeight
 import com.bugmaker.paintingboard.util.screenWidth
@@ -51,8 +49,9 @@ class CanvasLayout: View {
         var defaultHeight = screenHeight-150
 
         //画笔设置
-        var paintColor = R.color.teal_200
-        var strokeWith = 5.dp
+        var paintColor = Color.rgb(255, 0, 0)
+        //单位px
+        var strokeWith:Int = 21
 
     }
 
@@ -71,7 +70,7 @@ class CanvasLayout: View {
     //当前画笔
     var curPaint = Paint().apply {
         color = paintColor
-        strokeWidth = strokeWith
+        strokeWidth = strokeWith.toFloat()
         strokeJoin = Paint.Join.ROUND
         strokeCap = Paint.Cap.ROUND
         style = Paint.Style.STROKE
@@ -86,7 +85,6 @@ class CanvasLayout: View {
     private var listener:DrawInterface ?= null
 
     private fun init() {
-        initPaint()
         setBackgroundResource(R.color.white)
     }
 
@@ -101,13 +99,6 @@ class CanvasLayout: View {
         invalidate()
     }
 
-    fun initPaint() {
-
-    }
-
-    fun addBitmap(bitmap: Bitmap){
-
-    }
 
     fun setPaint(paintSet: PaintSet){
         curPaint = Paint().apply {
@@ -118,6 +109,7 @@ class CanvasLayout: View {
             strokeJoin = Paint.Join.ROUND
             strokeCap = Paint.Cap.ROUND
         }
+        curPaint = PaintTypeConstruct.constructPaint(curPaint)
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -128,6 +120,8 @@ class CanvasLayout: View {
                 curPath = Path()
                 //当前触摸点就是这个路径的起始点
                 curPath?.moveTo(event.x, event.y)
+                curPath?.lineTo(event.x, event.y)
+                invalidate()
             }
             MotionEvent.ACTION_MOVE ->{
                 curPath?.lineTo(event.x, event.y)

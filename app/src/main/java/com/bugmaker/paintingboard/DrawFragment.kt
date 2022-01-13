@@ -67,22 +67,23 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
 
         //保存
         binding.ivSave.click {
-            SaveDialog.getInstance().show(parentFragmentManager,"save")
+            SaveDialog.instance.show(parentFragmentManager,"save")
         }
 
         //选择画笔
         binding.ivPaint.click {
             PaintDialog.instance.show(parentFragmentManager,"paint")
+            PaintDialog.instance.setCurPaint(binding.surfaceView.curPaint)
         }
 
         //橡皮
         binding.ivDelete.click {
-            DeleteDialog.getInstance().show(parentFragmentManager,"delete")
+            DeleteDialog.instance.show(parentFragmentManager,"delete")
         }
 
         //图层
         binding.ivLayer.click {
-            LayerDialog.getInstance().show(parentFragmentManager,"layer")
+            LayerDialog.instance.show(parentFragmentManager,"layer")
         }
 
         //更多工具

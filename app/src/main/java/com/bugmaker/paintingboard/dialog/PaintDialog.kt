@@ -1,6 +1,7 @@
 package com.bugmaker.paintingboard.dialog
 
 import android.content.DialogInterface
+import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.Gravity
@@ -8,17 +9,17 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import com.bugmaker.paintingboard.bean.PaintSet
 import com.bugmaker.paintingboard.bean.PaintType
-import com.bugmaker.paintingboard.databinding.DialogCreateCanvasBinding
 import com.bugmaker.paintingboard.databinding.DialogPaintBinding
 import com.bugmaker.paintingboard.util.Constant
 import com.bugmaker.paintingboard.util.LiveDataBus
 import com.bugmaker.paintingboard.util.dp
 import com.bugmaker.paintingboard.util.screenHeight
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlin.math.roundToInt
 
 /**
  * @ClassName CanvasCreateDialog
- * @Description TODO
+ * @Description TODO 画笔设置
  * @Author AlexLu_1406496344@qq.com
  * @Date 2022/1/10 16:25
  */
@@ -46,6 +47,7 @@ class PaintDialog : BaseBottomSheetDialogFragment<DialogPaintBinding>(DialogPain
         width = ViewGroup.LayoutParams.MATCH_PARENT
         height = screenHeight*4/5
         peekHeight = 300.dp.toInt()
+        defaultState = BottomSheetBehavior.STATE_EXPANDED
     }
 
     override suspend fun initView() {
@@ -102,9 +104,8 @@ class PaintDialog : BaseBottomSheetDialogFragment<DialogPaintBinding>(DialogPain
 
         binding.colorPickView.setOnColorChangeListener {
             curColor = it
-            //val color = ColorDrawable(curColor)
+            refreshPreviewPaint()
         }
-
 
     }
 
@@ -115,8 +116,10 @@ class PaintDialog : BaseBottomSheetDialogFragment<DialogPaintBinding>(DialogPain
         if (size > maxPaintSize) size = maxPaintSize
         if (size < minPaintSize) size = minPaintSize
         binding.paintSizeText.text = "${size}px"
+        refreshPreviewPaint()
     }
 
+    //刷新画笔透明度
     private fun refreshPaintAlpha(progress: Int){
         Log.d(TAG, "refreshPaintAlpha: $progress")
         alpha = progress
@@ -126,8 +129,26 @@ class PaintDialog : BaseBottomSheetDialogFragment<DialogPaintBinding>(DialogPain
         if (tempAlpha > 1) tempAlpha = 1.0
         if (tempAlpha < 0) tempAlpha = 0.0
         binding.paintAlphaText.text = "${(tempAlpha*100).toInt()}%"
+        refreshPreviewPaint()
     }
 
+
+    //刷新画笔预览
+    private fun refreshPreviewPaint() {
+        val paint = Paint().apply {
+            color = if (curColor==null){
+                curPaint!!.color
+            }else {
+                curColor!!
+            }
+            strokeWidth = size.toFloat()
+            alpha = binding.paintSeekbar2.progress
+            style = Paint.Style.STROKE
+            strokeJoin = Paint.Join.ROUND
+            strokeCap = Paint.Cap.ROUND
+        }
+        binding.paintPreview.setPaint(paint)
+    }
 
     override suspend fun initData() {
 
@@ -139,5 +160,12 @@ class PaintDialog : BaseBottomSheetDialogFragment<DialogPaintBinding>(DialogPain
         super.onDismiss(dialog)
     }
 
+
+
+    //不要修改此paint
+    private var curPaint:Paint ?= null
+    fun setCurPaint(paint: Paint?){
+        curPaint = paint
+    }
 
 }

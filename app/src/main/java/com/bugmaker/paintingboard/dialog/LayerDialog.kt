@@ -9,15 +9,18 @@ import com.bugmaker.paintingboard.util.screenHeight
 
 /**
  * @ClassName CanvasCreateDialog
- * @Description TODO
+ * @Description TODO 图层设置
  * @Author AlexLu_1406496344@qq.com
  * @Date 2022/1/10 16:25
  */
 class LayerDialog : BaseBottomSheetDialogFragment<DialogLayerBinding>(DialogLayerBinding::inflate) {
 
     companion object{
-        @JvmStatic
-        fun getInstance() = LayerDialog()
+
+        val instance by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+            LayerDialog()
+        }
+
     }
 
     init {
