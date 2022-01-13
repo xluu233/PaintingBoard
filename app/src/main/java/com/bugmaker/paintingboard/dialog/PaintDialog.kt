@@ -24,7 +24,7 @@ class PaintDialog : BaseBottomSheetDialogFragment<DialogPaintBinding>(DialogPain
         fun getInstance() = PaintDialog()
 
         //单位px
-        var maxPaintSize:Int = 300
+        var maxPaintSize:Int = 200
         var minPaintSize:Int = 1
 
         var size = minPaintSize
@@ -39,8 +39,7 @@ class PaintDialog : BaseBottomSheetDialogFragment<DialogPaintBinding>(DialogPain
     }
 
     override suspend fun initView() {
-        refreshPaintAlpha(60)
-        binding.paintSizeText.text = "${size}px"
+        Log.d(TAG, "initView")
 
         binding.paintSeekbar1.apply {
             max = 100
@@ -63,12 +62,12 @@ class PaintDialog : BaseBottomSheetDialogFragment<DialogPaintBinding>(DialogPain
                     refreshPaintSize(seekBar!!.progress)
                 }
             })
+            progress = 10
         }
 
 
         binding.paintSeekbar2.apply {
             max = 100
-            progress = 60
             setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 //seekbar状态改变
                 override fun onProgressChanged(
@@ -88,6 +87,7 @@ class PaintDialog : BaseBottomSheetDialogFragment<DialogPaintBinding>(DialogPain
                     refreshPaintAlpha(seekBar!!.progress)
                 }
             })
+            progress = 60
         }
 
     }
@@ -102,6 +102,7 @@ class PaintDialog : BaseBottomSheetDialogFragment<DialogPaintBinding>(DialogPain
     }
 
     private fun refreshPaintAlpha(progress: Int){
+        Log.d(TAG, "refreshPaintAlpha: $progress")
         alpha = progress.toFloat()/100f
         var size = (alpha*100).toInt()
         if (size > 100) size = 100

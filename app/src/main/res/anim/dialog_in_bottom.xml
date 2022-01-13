@@ -10,4 +10,15 @@
         android:pivotY="100%"
         android:fillAfter="false"
         android:duration="400"/>
+
+<!--
+    <translate
+        android:interpolator="@android:anim/accelerate_interpolator"
+        android:fromXDelta="0%"
+        android:toXDelta="0%"
+        android:fromYDelta="100%"
+        android:toYDelta="0%"
+        android:duration="500"/>
+-->
+
 </set>

@@ -3,6 +3,7 @@ package com.bugmaker.paintingboard.dialog
 import android.view.ViewGroup
 import com.bugmaker.paintingboard.databinding.DialogCreateCanvasBinding
 import com.bugmaker.paintingboard.util.dp
+import com.bugmaker.paintingboard.util.screenHeight
 
 /**
  * @ClassName CanvasCreateDialog
@@ -20,7 +21,7 @@ class CreateDialog : BaseBottomSheetDialogFragment<DialogCreateCanvasBinding>(Di
     init {
         cancel = true
         width = ViewGroup.LayoutParams.MATCH_PARENT
-        height = ViewGroup.LayoutParams.WRAP_CONTENT
+        height = screenHeight *4/5
         peekHeight = 300.dp.toInt()
     }
 

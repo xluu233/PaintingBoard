@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "PaintingBoard"
 include ':app'
+include ':ColorPick'
