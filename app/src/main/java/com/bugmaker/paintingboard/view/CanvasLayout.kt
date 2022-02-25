@@ -68,12 +68,9 @@ class CanvasLayout: View {
         get() = !backPathArray.isEmpty()
 
     //当前画笔
-    var curPaint = Paint().apply {
+    var curPaint = PaintTypeConstruct.getDefaultPaint().apply {
         color = paintColor
         strokeWidth = strokeWith.toFloat()
-        strokeJoin = Paint.Join.ROUND
-        strokeCap = Paint.Cap.ROUND
-        style = Paint.Style.STROKE
     }
 
     //当前路径
@@ -101,15 +98,11 @@ class CanvasLayout: View {
 
 
     fun setPaint(paintSet: PaintSet){
-        curPaint = Paint().apply {
+        curPaint = PaintTypeConstruct.getDefaultPaint().apply {
             color = paintSet.color ?: curPaint.color
             strokeWidth = paintSet.size.toFloat()
             alpha = paintSet.alpha
-            style = Paint.Style.STROKE
-            strokeJoin = Paint.Join.ROUND
-            strokeCap = Paint.Cap.ROUND
         }
-        curPaint = PaintTypeConstruct.constructPaint(curPaint)
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -178,6 +171,7 @@ class CanvasLayout: View {
         this.listener = listener
     }
 
+    //撤销操作
     fun back(){
         curLine = pathStack.pop()
         backPathArray.offer(curLine)
@@ -186,6 +180,7 @@ class CanvasLayout: View {
         listener?.refreshBack()
     }
 
+    //反撤销操作
     fun reBack(){
         curLine = backPathArray.pollLast()
         pathStack.push(curLine)

@@ -65,13 +65,6 @@
                 app:layout_constraintGuide_begin="32dp" />
 
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_begin="530dp" />
-
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
@@ -166,7 +159,7 @@
                 android:text="取色器："
                 android:textAppearance="@style/commonText"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
-                app:layout_constraintTop_toTopOf="@+id/guideline7" />
+                app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
 
             <com.bugmaker.colorpick.ColorPickerView
@@ -203,26 +196,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:text="画笔类型："
-                android:textAppearance="@style/commonText"
-                app:layout_constraintStart_toStartOf="@+id/guideline5"
-                app:layout_constraintTop_toTopOf="@+id/guideline3" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="45dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="45dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

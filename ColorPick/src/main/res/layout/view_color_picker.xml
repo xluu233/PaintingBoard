@@ -118,7 +118,6 @@
             android:id="@+id/rl_trans_bar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rl_color_bar"
             app:layout_constraintEnd_toEndOf="@+id/rl_color_bar"

@@ -1,9 +1,11 @@
 package com.bugmaker.paintingboard.dialog
 
+import android.util.Log
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.bugmaker.paintingboard.databinding.DialogCreateCanvasBinding
-import com.bugmaker.paintingboard.util.dp
-import com.bugmaker.paintingboard.util.screenHeight
+import com.bugmaker.paintingboard.util.*
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 /**
  * @ClassName CanvasCreateDialog
@@ -26,13 +28,24 @@ class CreateDialog : BaseBottomSheetDialogFragment<DialogCreateCanvasBinding>(Di
         width = ViewGroup.LayoutParams.MATCH_PARENT
         height = screenHeight *4/5
         peekHeight = 300.dp.toInt()
+        defaultState = BottomSheetBehavior.STATE_EXPANDED
+
     }
 
+
     override suspend fun initView() {
+        binding.layoutBackgroundColor.click {
+            ColorPickDialog.getInstance(Constant.CreateLayoutColor).show(parentFragmentManager,"color_pick")
+        }
+
 
     }
 
     override suspend fun initData() {
+        LiveDataBus.with<Int>(Constant.CreateLayoutColor).observe(this, Observer {
+            binding.layoutBackgroundColor.setBackgroundColor(it)
+        })
+
 
     }
 }

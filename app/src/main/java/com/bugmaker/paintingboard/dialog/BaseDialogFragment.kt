@@ -42,7 +42,7 @@ abstract class BaseDialogFragment<VB : ViewBinding>(
     private var height:Int = WRAP_CONTENT
 
     @StyleRes
-    private var animation: Int = R.style.dialogAnimation_bottom
+    private var animation: Int = R.style.dialogAnimation_center
     @StyleRes
     private var style:Int = R.style.DialogTheme
     @DrawableRes

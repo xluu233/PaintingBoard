@@ -49,4 +49,15 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="commonButton">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="minWidth">100dp</item>
+        <item name="android:background">@drawable/back_button</item>
+        <item name="android:gravity">center</item>
+        <item name="elevation">2dp</item>
+    </style>
+
 </resources>

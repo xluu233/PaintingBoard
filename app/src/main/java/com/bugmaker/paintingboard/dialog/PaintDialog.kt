@@ -10,10 +10,7 @@ import android.widget.SeekBar
 import com.bugmaker.paintingboard.bean.PaintSet
 import com.bugmaker.paintingboard.bean.PaintType
 import com.bugmaker.paintingboard.databinding.DialogPaintBinding
-import com.bugmaker.paintingboard.util.Constant
-import com.bugmaker.paintingboard.util.LiveDataBus
-import com.bugmaker.paintingboard.util.dp
-import com.bugmaker.paintingboard.util.screenHeight
+import com.bugmaker.paintingboard.util.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlin.math.roundToInt
 
@@ -102,6 +99,7 @@ class PaintDialog : BaseBottomSheetDialogFragment<DialogPaintBinding>(DialogPain
             progress = 255
         }
 
+        binding.colorPickView.hideAlphaSet()
         binding.colorPickView.setOnColorChangeListener {
             curColor = it
             refreshPreviewPaint()
@@ -135,7 +133,7 @@ class PaintDialog : BaseBottomSheetDialogFragment<DialogPaintBinding>(DialogPain
 
     //刷新画笔预览
     private fun refreshPreviewPaint() {
-        val paint = Paint().apply {
+        val paint = PaintTypeConstruct.getDefaultPaint().apply {
             color = if (curColor==null){
                 curPaint!!.color
             }else {
@@ -143,9 +141,6 @@ class PaintDialog : BaseBottomSheetDialogFragment<DialogPaintBinding>(DialogPain
             }
             strokeWidth = size.toFloat()
             alpha = binding.paintSeekbar2.progress
-            style = Paint.Style.STROKE
-            strokeJoin = Paint.Join.ROUND
-            strokeCap = Paint.Cap.ROUND
         }
         binding.paintPreview.setPaint(paint)
     }
@@ -159,7 +154,6 @@ class PaintDialog : BaseBottomSheetDialogFragment<DialogPaintBinding>(DialogPain
         LiveDataBus.with<PaintSet>(Constant.SetPaintParams).postData(paintSet)
         super.onDismiss(dialog)
     }
-
 
 
     //不要修改此paint

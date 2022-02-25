@@ -31,8 +31,6 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding>(
     private var _binding: VB? = null
     val binding: VB get() = _binding!!
 
-    //是否展示背景阴影
-    var showShadow = false
 
     //是否能否点击外部取消
     var cancel = true
@@ -46,8 +44,6 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding>(
     //布局默认背景
     @DrawableRes
     var layoutBackground:Int = android.R.color.transparent
-    @StyleRes
-    var animation: Int = R.style.dialogAnimation_bottom
     @StyleRes
     var style:Int = R.style.DialogTheme
 
@@ -67,14 +63,7 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding>(
 
     override fun onStart() {
         super.onStart()
-        dialog?.window?.apply {
-            setWindowAnimations(animation)
-            if (!showShadow){
-                val windowParams: WindowManager.LayoutParams = attributes
-                windowParams.dimAmount = 0f
-                attributes = windowParams
-            }
-        }
+        dialog?.window?.setWindowAnimations(R.style.dialogAnimation_bottom)
         //拿到系统的 bottom_sheet
         val view: FrameLayout = dialog?.findViewById(R.id.design_bottom_sheet)!!
         //设置view高度
@@ -86,26 +75,6 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding>(
         //设置展开状态
         behavior.state = defaultState
 
-        behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when (newState) {
-                    BottomSheetBehavior.STATE_EXPANDED -> {
-                    }
-                    BottomSheetBehavior.STATE_COLLAPSED -> {
-                    }
-                    BottomSheetBehavior.STATE_DRAGGING -> {
-                    }
-                    BottomSheetBehavior.STATE_SETTLING -> {
-                    }
-                    BottomSheetBehavior.STATE_HIDDEN -> {
-                    }
-                }
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-
-            }
-        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

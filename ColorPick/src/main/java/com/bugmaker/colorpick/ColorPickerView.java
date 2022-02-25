@@ -305,6 +305,10 @@ public class ColorPickerView extends LinearLayout {
         });
     }
 
+    public void hideAlphaSet(){
+        rlTransBar.setVisibility(GONE);
+    }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         getParent().requestDisallowInterceptTouchEvent(true);

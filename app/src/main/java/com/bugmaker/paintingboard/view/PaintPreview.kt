@@ -37,10 +37,6 @@ class PaintPreview : androidx.appcompat.widget.AppCompatImageView {
         invalidate()
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-    }
-
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         Log.d(TAG, "onLayout: $changed,left:$left,right:$right,top:$top,bottom:$bottom,x:$x,y:$y")
         super.onLayout(changed, left, top, right, bottom)

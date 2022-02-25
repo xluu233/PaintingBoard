@@ -12,5 +12,5 @@ object Constant {
 
     const val SetPaintParams = "SetPaintParams"
 
-
+    const val CreateLayoutColor = "CreateLayoutColor"
 }
