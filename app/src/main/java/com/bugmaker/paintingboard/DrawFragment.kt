@@ -64,12 +64,12 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
 
         //橡皮，暂未实现
         binding.ivDelete.click {
-            DeleteDialog.instance.show(parentFragmentManager,"delete")
+//            DeleteDialog.instance.show(parentFragmentManager,"delete")
         }
 
         //图层，暂未实现
         binding.ivLayer.click {
-            LayerDialog.instance.show(parentFragmentManager,"layer")
+//            LayerDialog.instance.show(parentFragmentManager,"layer")
         }
 
         //更多工具，暂未实现
@@ -79,7 +79,7 @@ class DrawFragment : Fragment(R.layout.fragment_draw) {
 
         //保存，暂未实现
         binding.ivSave.click {
-            SaveDialog.instance.show(parentFragmentManager,"save")
+//            SaveDialog.instance.show(parentFragmentManager,"save")
         }
 
     }
